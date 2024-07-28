@@ -1,11 +1,27 @@
 // ordenation-algorithm.cpp : Este arquivo contém a função 'main'. A execução do programa começa e termina ali.
 //
 
+#include "bubble_sort.hpp"
+#include <vector>
 #include <iostream>
 
-int main()
-{
-    std::cout << "Hello World!\n";
+void printArray(const std::vector<int>& arr) {
+    for (int num : arr) {
+        std::cout << num << " ";
+    }
+    std::cout << std::endl;
+}
+
+int main() {
+    std::vector<int> arr = { 64, 34, 25, 12, 22, 11, 90 };
+
+    BubbleSort bubbleSort;
+    bubbleSort.sort(arr);
+
+    std::cout << "Array Ordenado: ";
+    printArray(arr);
+
+    return 0;
 }
 
 // Executar programa: Ctrl + F5 ou Menu Depurar > Iniciar Sem Depuração
