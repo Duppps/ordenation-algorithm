@@ -132,12 +132,14 @@
     <ClCompile Include="ordenation-algorithm.cpp" />
     <ClCompile Include="quick_sort.cpp" />
     <ClCompile Include="selection_sort.cpp" />
+    <ClCompile Include="shell_sort.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bubble_sort.hpp" />
     <ClInclude Include="insertion_sort.hpp" />
     <ClInclude Include="quick_sort.hpp" />
     <ClInclude Include="selection_sort.hpp" />
+    <ClInclude Include="shell_sort.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

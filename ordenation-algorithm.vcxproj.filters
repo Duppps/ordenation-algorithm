@@ -33,6 +33,9 @@
     <ClCompile Include="quick_sort.cpp">
       <Filter>Arquivos de Origem\algorithms</Filter>
     </ClCompile>
+    <ClCompile Include="shell_sort.cpp">
+      <Filter>Arquivos de Origem\algorithms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bubble_sort.hpp">
@@ -45,6 +48,9 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="quick_sort.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="shell_sort.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
