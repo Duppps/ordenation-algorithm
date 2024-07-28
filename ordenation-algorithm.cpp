@@ -3,6 +3,7 @@
 #include "bubble_sort.hpp"
 #include "insertion_sort.hpp"
 #include "selection_sort.hpp"
+#include "quick_sort.hpp"
 
 void printArray(const std::vector<int>& arr) {
     for (int num : arr) {
@@ -17,6 +18,7 @@ int main() {
     BubbleSort bubbleSort;
     InsertionSort insertionSort;
     SelectionSort selectionSort;
+    QuickSort quickSort;
 
     std::vector<int> arr1 = arr;
     bubbleSort.sort(arr1);
@@ -32,6 +34,11 @@ int main() {
     selectionSort.sort(arr3);
     std::cout << "Selection Sorted array: ";
     printArray(arr3);
+
+    std::vector<int> arr4 = arr;
+    quickSort.sort(arr4);
+    std::cout << "Quick Sorted array: ";
+    printArray(arr4);
 
     return 0;
 }
