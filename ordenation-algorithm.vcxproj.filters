@@ -39,6 +39,9 @@
     <ClCompile Include="gui.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="file_handler.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bubble_sort.hpp">
@@ -59,5 +62,22 @@
     <ClInclude Include="gui.hpp">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="sort_order.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="file_handler.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="D:\ruanv\Downloads\arquivos_ordenacao\numeros_ordenados.txt">
+      <Filter>Arquivos de Recurso</Filter>
+    </Text>
+    <Text Include="D:\ruanv\Downloads\arquivos_ordenacao\numeros_ordem_decrescente.txt">
+      <Filter>Arquivos de Recurso</Filter>
+    </Text>
+    <Text Include="D:\ruanv\Downloads\arquivos_ordenacao\numeros_aleatorios.txt">
+      <Filter>Arquivos de Recurso</Filter>
+    </Text>
   </ItemGroup>
 </Project>

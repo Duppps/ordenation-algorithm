@@ -2,6 +2,7 @@
 #define SHELL_SORT_HPP
 
 #include <vector>
+#include "sort_order.hpp"
 
 class ShellSort {
 public:

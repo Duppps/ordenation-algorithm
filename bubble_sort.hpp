@@ -2,6 +2,7 @@
 #define BUBBLE_SORT_HPP
 
 #include <vector>
+#include "sort_order.hpp"
 
 class BubbleSort {
 public:

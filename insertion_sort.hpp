@@ -2,6 +2,7 @@
 #define INSERTION_SORT_HPP
 
 #include <vector>
+#include "sort_order.hpp"
 
 class InsertionSort {
 public:

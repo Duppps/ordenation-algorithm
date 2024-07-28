@@ -130,6 +130,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bubble-sort.cpp" />
+    <ClCompile Include="file_handler.cpp" />
     <ClCompile Include="gui.cpp" />
     <ClCompile Include="insertion_sort.cpp" />
     <ClCompile Include="ordenation-algorithm.cpp" />
@@ -139,11 +140,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bubble_sort.hpp" />
+    <ClInclude Include="file_handler.hpp" />
     <ClInclude Include="gui.hpp" />
     <ClInclude Include="insertion_sort.hpp" />
     <ClInclude Include="quick_sort.hpp" />
     <ClInclude Include="selection_sort.hpp" />
     <ClInclude Include="shell_sort.hpp" />
+    <ClInclude Include="sort_order.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="D:\ruanv\Downloads\arquivos_ordenacao\numeros_aleatorios.txt" />
+    <Text Include="D:\ruanv\Downloads\arquivos_ordenacao\numeros_ordem_decrescente.txt" />
+    <Text Include="D:\ruanv\Downloads\arquivos_ordenacao\numeros_ordenados.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
