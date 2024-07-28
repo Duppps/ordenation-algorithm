@@ -5,6 +5,8 @@
 #include "selection_sort.hpp"
 #include "quick_sort.hpp"
 #include "shell_sort.hpp"
+#include <gtk/gtk.h>
+#include "gui.hpp"
 
 void printArray(const std::vector<int>& arr) {
     for (int num : arr) {
@@ -13,7 +15,9 @@ void printArray(const std::vector<int>& arr) {
     std::cout << std::endl;
 }
 
-int main() {
+int main(int argc, char **argv) {
+    int status = start_gtk_application(argc, argv);
+
     std::vector<int> arr = { 64, 34, 25, 12, 22, 11, 90 };
 
     BubbleSort bubbleSort;
@@ -47,5 +51,5 @@ int main() {
     std::cout << "Shell Sorted array: ";
     printArray(arr5);
 
-    return 0;
+    return status;
 }
