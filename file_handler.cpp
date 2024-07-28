@@ -6,10 +6,15 @@ std::vector<int> FileHandler::genArray(SortOrder order, int size) {
     switch (order) {
         case SortOrder::Crescente:
             fileName = "numeros_ordenados.txt";
+            break;
         case SortOrder::Decrescente:
             fileName = "numeros_ordem_decrescente.txt";
+            break;
         case SortOrder::Random:
             fileName = "numeros_aleatorios.txt";
+            break;
+        default:
+            return {};
     }
 
     std::ifstream file(fileName);
