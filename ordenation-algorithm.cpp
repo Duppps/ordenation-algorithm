@@ -7,7 +7,10 @@
 #include "shell_sort.hpp"
 #include <gtk/gtk.h>
 #include "gui.hpp"
+#include <locale>
+#include <codecvt>
 
 int main(int argc, char **argv) {
+    std::locale::global(std::locale("en_US.UTF-8"));
     return start_gtk_application(argc, argv);
 }

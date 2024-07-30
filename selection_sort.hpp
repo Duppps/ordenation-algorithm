@@ -1,12 +1,11 @@
 #ifndef SELECTION_SORT_HPP
 #define SELECTION_SORT_HPP
 
-#include <vector>
-#include "sort_order.hpp"
+#include "sort_algorithm.hpp"
 
-class SelectionSort {
+class SelectionSort : public SortAlgorithm {
 public:
-    void sort(std::vector<int>& arr);
+    void sort(std::vector<int>& arr) override;
 };
 
 #endif

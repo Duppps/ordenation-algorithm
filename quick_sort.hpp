@@ -1,12 +1,11 @@
 #ifndef QUICK_SORT_HPP
 #define QUICK_SORT_HPP
 
-#include <vector>
-#include "sort_order.hpp"
+#include "sort_algorithm.hpp"
 
-class QuickSort {
+class QuickSort : public SortAlgorithm {
 public:
-    void sort(std::vector<int>& arr);
+    void sort(std::vector<int>& arr) override;
 
 private:
     void quickSort(std::vector<int>& arr, int low, int high);

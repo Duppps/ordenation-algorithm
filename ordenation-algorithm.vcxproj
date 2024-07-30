@@ -137,6 +137,7 @@
     <ClCompile Include="quick_sort.cpp" />
     <ClCompile Include="selection_sort.cpp" />
     <ClCompile Include="shell_sort.cpp" />
+    <ClCompile Include="sort_algorithm.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bubble_sort.hpp" />
