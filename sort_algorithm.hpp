@@ -9,25 +9,31 @@
 
 class SortAlgorithm {
 protected:
-    int comparisons;
-    int movements;
+    long long comparisons;
+    long long movements;
+    int tempo;
 
 public:
-    SortAlgorithm() : comparisons(0), movements(0) {}
+    SortAlgorithm() : comparisons(0), movements(0), tempo(0) {}
 
     virtual void sort(std::vector<int>& arr) = 0;
 
     void resetMetrics() {
         comparisons = 0;
         movements = 0;
+        tempo = 0;
     }
 
-    int getComparisons() const {
+    long long getComparisons() const {
         return comparisons;
     }
 
-    int getMovements() const {
+    long long getMovements() const {
         return movements;
+    }
+
+    int getTempo() const {
+        return tempo;
     }
 };
 

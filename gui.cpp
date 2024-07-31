@@ -1,5 +1,4 @@
 #include "gui.hpp"
-#include <random>
 #include <gtk/gtk.h>
 #include <vector>
 #include <string>
@@ -22,73 +21,94 @@ std::string selected_algorithm_two;
 int selected_nodes_quantity;
 SortOrder sortOrder = SortOrder::Crescente;
 
-void printStats(GtkTextBuffer* buffer, const std::string& algoName, double comparisons, double movements, double duration) {
+
+void printStats(GtkTextBuffer* buffer, const std::string& algoName, long long comparisons, long long movements, double duration) {
+    if (!GTK_IS_TEXT_BUFFER(buffer)) {
+        std::cerr << "Invalid GTK Text Buffer!" << std::endl;
+        return;
+    }
+
     std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
     std::wstring algoNameW = converter.from_bytes(algoName);
     std::wostringstream statsStream;
+    statsStream.imbue(std::locale(""));
     statsStream << algoNameW << L":\n"
-        << L"Tempo de execução: " << std::fixed << std::setprecision(0) << duration << L" segundos\n"
-        << L"Número de comparações: " << std::fixed << std::setprecision(0) << comparisons << L"\n"
-        << L"Número de movimentações: " << std::fixed << std::setprecision(0) << movements << L"\n"
+        << L"Tempo de execução: " << std::fixed << std::setprecision(0) << duration << L" s\n"
+        << L"Número de comparações: " << std::fixed << std::setprecision(0) << std::setw(10) << std::setfill(L'0') << comparisons << L"\n"
+        << L"Número de movimentações: " << std::fixed << std::setprecision(0) << std::setw(10) << std::setfill(L'0') << movements << L"\n"
         << L"--------------------------------------\n";
     std::wstring stats = statsStream.str();
     std::string statsStr = converter.to_bytes(stats);
 
-    if (GTK_IS_TEXT_BUFFER(buffer)) {
-        GtkTextIter endIter;
-        gtk_text_buffer_get_end_iter(buffer, &endIter);
-        gtk_text_buffer_insert(buffer, &endIter, statsStr.c_str(), -1);
-    }
+    GtkTextIter endIter;
+    gtk_text_buffer_get_end_iter(buffer, &endIter);
+    gtk_text_buffer_insert(buffer, &endIter, statsStr.c_str(), -1);
 }
 
-void printAlgorithmComparisonStats(const std::map<std::string, int>& algorithmOne, const std::map<std::string, int>& algorithmTwo, GtkTextBuffer* buffer) {
+void printAlgorithmComparisonStats(const std::map<std::string, long long>& algorithmOne, const std::map<std::string, long long>& algorithmTwo, GtkTextBuffer* buffer) {
     std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
     std::wostringstream comparisonStream;
 
-    comparisonStream << L"Diferenças entre algoritmos:\n";    
-        
-        double durationDifference = algorithmOne.at("Duration") - algorithmTwo.at("Duration");
-        double comparisonsDifference = algorithmOne.at("Comparisons") - algorithmTwo.at("Comparisons");
-        double movementsDifference = algorithmOne.at("Movements") - algorithmTwo.at("Movements");
+    comparisonStream << L"Diferenças entre algoritmos:\n";
 
-        comparisonStream << L"\nDiferença no Tempo de execução: " << std::fixed << std::setprecision(6) << durationDifference << L" segundos\n"
-            << L"Diferença no Número de comparações: " << std::fixed << std::setprecision(0) << comparisonsDifference << L"\n"
-            << L"Diferença no Número de movimentações: " << std::fixed << std::setprecision(0) << movementsDifference << L"\n";
+    long long durationDifference = algorithmOne.at("Duration") - algorithmTwo.at("Duration");
+    long long comparisonsDifference = algorithmOne.at("Comparisons") - algorithmTwo.at("Comparisons");
+    long long movementsDifference = algorithmOne.at("Movements") - algorithmTwo.at("Movements");
 
-        comparisonStream << L"\nResultado:\n";
+    comparisonStream << L"\nDiferença no Tempo de execução: " << std::fixed << std::setprecision(0) << durationDifference << L" s\n"
+        << L"Diferença no Número de comparações: " << std::fixed << std::setprecision(0) << std::setw(10) << std::setfill(L'0') << comparisonsDifference << L"\n"
+        << L"Diferença no Número de movimentações: " << std::fixed << std::setprecision(0) << std::setw(10) << std::setfill(L'0') << movementsDifference << L"\n";
 
-        if (durationDifference < 0 && comparisonsDifference < 0 && movementsDifference < 0) {
-            comparisonStream << L"O algoritmo um foi melhor em todos os critérios.\n";
-        }
-        else if (durationDifference > 0 && comparisonsDifference > 0 && movementsDifference > 0) {
-            comparisonStream << L"O algoritmo dois foi melhor em todos os critérios.\n";
-        }
-        else {
-            comparisonStream << L"Mesma coisa.\n";
-        }
+    comparisonStream << L"\nResultado:\n";
 
-        std::wstring comparisonStats = comparisonStream.str();
-        std::string comparisonStatsStr = converter.to_bytes(comparisonStats);
+    if (durationDifference < 0) {
+        comparisonStream << L"Algoritmo 1 é mais rápido.\n";
+    }
+    else if (durationDifference > 0) {
+        comparisonStream << L"Algoritmo 2 é mais rápido.\n";
+    }
+    else {
+        comparisonStream << L"Ambos os algoritmos têm o mesmo tempo de execução.\n";
+    }
 
-        if (g_utf8_validate(comparisonStatsStr.c_str(), -1, NULL)) {
-            if (GTK_IS_TEXT_BUFFER(buffer)) {
-                GtkTextIter endIter;
-                gtk_text_buffer_get_end_iter(buffer, &endIter);
-                gtk_text_buffer_insert(buffer, &endIter, comparisonStatsStr.c_str(), -1);
-            }
-        }
-        else {
-            std::cerr << "Erro: Texto não é UTF-8 válido.\n";
-        }
-       
+    if (comparisonsDifference < 0) {
+        comparisonStream << L"Algoritmo 1 faz menos comparações.\n";
+    }
+    else if (comparisonsDifference > 0) {
+        comparisonStream << L"Algoritmo 2 faz menos comparações.\n";
+    }
+    else {
+        comparisonStream << L"Ambos os algoritmos fazem o mesmo número de comparações.\n";
+    }
+
+    if (movementsDifference < 0) {
+        comparisonStream << L"Algoritmo 1 faz menos movimentações.\n";
+    }
+    else if (movementsDifference > 0) {
+        comparisonStream << L"Algoritmo 2 faz menos movimentações.\n";
+    }
+    else {
+        comparisonStream << L"Ambos os algoritmos fazem o mesmo número de movimentações.\n";
+    }
+
+    comparisonStream << L"--------------------------------------\n";
+
+    std::wstring comparisonStr = comparisonStream.str();
+    std::string comparisonStrUtf8 = converter.to_bytes(comparisonStr);
+
+    if (GTK_IS_TEXT_BUFFER(buffer)) {
+        GtkTextIter endIter;
+        gtk_text_buffer_get_end_iter(buffer, &endIter);
+        gtk_text_buffer_insert(buffer, &endIter, comparisonStrUtf8.c_str(), -1);
+    }
 }
 
 
-std::map<std::string, int> sort_array_with_selected_algorithm(GtkTextBuffer* buffer, const std::string& algorithm) {
+std::map<std::string, long long> sort_array_with_selected_algorithm(GtkTextBuffer* buffer, const std::string& algorithm) {
     std::vector<int> arr = FileHandler::genArray(sortOrder, selected_nodes_quantity);
 
     SortAlgorithm* currentAlgo = nullptr;
-    std::map<std::string, int> statsMap;
+    std::map<std::string, long long> statsMap;
 
     if (algorithm == "Bubble Sort") {
         currentAlgo = new BubbleSort();
@@ -107,12 +127,9 @@ std::map<std::string, int> sort_array_with_selected_algorithm(GtkTextBuffer* buf
     }
 
     if (currentAlgo) {
-        auto start = std::chrono::high_resolution_clock::now();
         currentAlgo->sort(arr);
-        auto end = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double> duration = end - start;
 
-        statsMap["Duration"] = duration.count();
+        statsMap["Duration"] = currentAlgo->getTempo();
         statsMap["Comparisons"] = currentAlgo->getComparisons();
         statsMap["Movements"] = currentAlgo->getMovements();
 
@@ -147,8 +164,8 @@ void button_clicked_cb(GtkWidget* widget, gpointer data) {
     GtkTextBuffer* buffer = GTK_TEXT_BUFFER(data);
     gtk_text_buffer_set_text(buffer, "", -1);
 
-    std::map<std::string, int> statsAlgorithmOne = sort_array_with_selected_algorithm(buffer, selected_algorithm_one);
-    std::map<std::string, int> statsAlgorithmTwo = sort_array_with_selected_algorithm(buffer, selected_algorithm_two);
+    std::map<std::string, long long> statsAlgorithmOne = sort_array_with_selected_algorithm(buffer, selected_algorithm_one);
+    std::map<std::string, long long> statsAlgorithmTwo = sort_array_with_selected_algorithm(buffer, selected_algorithm_two);
 
     printStats(buffer, selected_algorithm_one, statsAlgorithmOne["Comparisons"], statsAlgorithmOne["Movements"], statsAlgorithmOne["Duration"]);
     printStats(buffer, selected_algorithm_two, statsAlgorithmTwo["Comparisons"], statsAlgorithmTwo["Movements"], statsAlgorithmTwo["Duration"]);
@@ -165,7 +182,7 @@ void on_order_changed(GtkCheckButton* toggle_button, gpointer user_data) {
         else if (g_strcmp0(label, "Ordenados - ordem decrescente") == 0) {
             sortOrder = SortOrder::Decrescente;
         }
-        else if (g_strcmp0(label, "Ordem Aleatória") == 0) {
+        else if (g_strcmp0(label, u8"Ordem Aleatória") == 0) {
             sortOrder = SortOrder::Random;
         }
     }

@@ -4,6 +4,9 @@ void InsertionSort::sort(std::vector<int>& arr) {
     int n = static_cast<int>(arr.size());
     comparisons = 0;
     movements = 0;
+    tempo = 0;
+
+    int tinicial = clock();    
 
     for (int i = 1; i < n; i++) {
         int key = arr[i];
@@ -23,4 +26,7 @@ void InsertionSort::sort(std::vector<int>& arr) {
         arr[j + 1] = key;
         movements++;
     }
+
+    int tfinal = clock();
+    tempo = double(tfinal - tinicial) / CLOCKS_PER_SEC;
 }

@@ -8,9 +8,10 @@
 #include <gtk/gtk.h>
 #include "gui.hpp"
 #include <locale>
+#include <Windows.h>
 #include <codecvt>
 
-int main(int argc, char **argv) {
-    std::locale::global(std::locale("en_US.UTF-8"));
-    return start_gtk_application(argc, argv);
+int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
+    std::locale::global(std::locale("pt_BR.UTF-8"));
+    return start_gtk_application(__argc, __argv);
 }

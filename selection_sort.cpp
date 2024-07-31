@@ -3,7 +3,10 @@
 void SelectionSort::sort(std::vector<int>& arr) {
     comparisons = 0;
     movements = 0;
+    tempo = 0;
+
     int n = static_cast<int>(arr.size());
+    int tinicial = clock();
 
     for (int i = 0; i < n - 1; i++) {
         int target_index = i;
@@ -20,4 +23,7 @@ void SelectionSort::sort(std::vector<int>& arr) {
             movements += 3; 
         }
     }
+
+    int tfinal = clock();
+    tempo = double(tfinal - tinicial) / CLOCKS_PER_SEC;
 }

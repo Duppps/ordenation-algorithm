@@ -1,17 +1,27 @@
 #include "bubble_sort.hpp"
 
 void BubbleSort::sort(std::vector<int>& arr) {
-    int n = static_cast<int>(arr.size());
+    size_t tam = arr.size();
+    int temp;
     comparisons = 0;
     movements = 0;
+    tempo = 0;
 
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n - i - 1; j++) {
+    int tinicial = clock();
+
+    for (size_t i = 0; i < tam - 1; i++) {
+        for (size_t j = 0; j < tam - i - 1; j++) {
             comparisons++;
             if (arr[j] > arr[j + 1]) {
-                std::swap(arr[j], arr[j + 1]);
-                movements += 3; 
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+                movements++;
             }
         }
     }
+
+    int tfinal = clock();
+    tempo = double(tfinal - tinicial) / CLOCKS_PER_SEC;
 }
+
