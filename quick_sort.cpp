@@ -5,41 +5,53 @@ void QuickSort::sort(std::vector<int>& arr) {
     movements = 0;
     tempo = 0;
 
-    if (!arr.empty()) {
-        quickSort(arr, 0, arr.size() - 1);
-    }
-    
+    int tinicial = clock(); 
+    quickSort(arr, 0, arr.size() - 1);
+    int tfinal = clock(); 
+
+    tempo = double(tfinal - tinicial) / CLOCKS_PER_SEC; 
 }
 
-void QuickSort::quickSort(std::vector<int>& arr, int low, int high) {
+void QuickSort::quickSort(std::vector<int>& arr, size_t low, size_t high) {
     if (low < high) {
-        int pi = partition(arr, low, high);
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
+        size_t pivot = medianOfThree(arr, low, high);
+        size_t pivotIndex = partition(arr, low, high, pivot);
+        quickSort(arr, low, pivotIndex - 1);
+        quickSort(arr, pivotIndex + 1, high);
     }
 }
 
-int QuickSort::partition(std::vector<int>& arr, int low, int high) {
-    int pivot = arr[high];
-    int i = low - 1;
-    int tinicial = clock();
+size_t QuickSort::partition(std::vector<int>& arr, size_t low, size_t high, size_t pivot) {
+    size_t i = low - 1;
 
-    for (int j = low; j < high; j++) {
+    for (size_t j = low; j < high; j++) {
         comparisons++;
         if (arr[j] <= pivot) {
             i++;
-            int temp = arr[i];
+            size_t temp = arr[i];
             arr[i] = arr[j];
             arr[j] = temp;
             movements++;
         }
     }
-    int temp = arr[i + 1];
+    size_t temp = arr[i + 1];
     arr[i + 1] = arr[high];
     arr[high] = temp;
     movements++;
-    int tfinal = clock();
-    tempo = double(tfinal - tinicial) / CLOCKS_PER_SEC;
 
     return (i + 1);
+}
+
+size_t QuickSort::medianOfThree(std::vector<int>& arr, size_t low, size_t high) {
+    size_t mid = low + (high - low) / 2;
+
+    size_t a = arr[low];
+    size_t b = arr[mid];
+    size_t c = arr[high];
+
+    if ((a < b && b < c) || (c < b && b < a))
+        return mid;
+    if ((b < a && a < c) || (c < a && a < b))
+        return low;
+    return high;
 }

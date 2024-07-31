@@ -8,8 +8,9 @@ public:
     void sort(std::vector<int>& arr) override;
 
 private:
-    void quickSort(std::vector<int>& arr, int low, int high);
-    int partition(std::vector<int>& arr, int low, int high);
+    void quickSort(std::vector<int>& arr, size_t low, size_t high);
+    size_t partition(std::vector<int>& arr, size_t low, size_t high, size_t pivot);
+    size_t medianOfThree(std::vector<int>& arr, size_t low, size_t high);
 };
 
 #endif 
